@@ -1,0 +1,50 @@
+
+set workdir = /home/student12/data
+set subj = 6819
+
+foreach run (01 02 03 04 05)
+set inDS = ${workdir}/raw/${subj}_visual_${run}.ds
+set tmpDS = ${workdir}/proc/tmp_crit_word_run_${run}.ds
+set outDS = ${workdir}/proc/crit_word_run_${run}.ds
+
+newDs -f -all \
+-marker critical_begin \
+-time -1.0 4 \
+-overlap 5 \
+-includeBadChannels \
+$inDS \
+$tmpDS
+
+newDs -f -all \
+-filter /home/jed/data/workshop/scripts/baseline_corr.cfg \
+-includeBadChannels \
+$tmpDS \
+$outDS
+
+rm -rf $tmpDS
+
+end
+
+
+foreach run (01 02 03 04 05)
+set inDS = ${workdir}/raw/${subj}_visual_${run}.ds
+set tmpDS = ${workdir}/proc/tmp_last_word_run_${run}.ds
+set outDS = ${workdir}/proc/last_word_run_${run}.ds
+
+newDs -f -all \
+-marker last_word \
+-time -1.0 4 \
+-overlap 5 \
+-includeBadChannels \
+$inDS \
+$tmpDS
+
+newDs -f -all \
+-filter /home/jed/data/workshop/scripts/baseline_corr.cfg \
+-includeBadChannels \
+$tmpDS \
+$outDS
+
+rm -rf $tmpDS
+
+end
