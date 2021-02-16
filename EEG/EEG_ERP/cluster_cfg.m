@@ -5,9 +5,9 @@ ft_defaults
 addpath /rri_disks/artemis/meltzer_lab/CANBIND/Anhedonia/SE1
 
 cfg         = [];
-%cfg.channel = Resp_Inc_SE1{1}.label';
-%'
-cfg.latency = 'all';
+cfg.channel = {'all'};
+%
+cfg.latency = [0 3.2];
 
 cfg.method           = 'montecarlo';
 cfg.statistic        = 'depsamplesT';
@@ -16,7 +16,7 @@ cfg.clusteralpha     = 0.05;
 cfg.clusterstatistic = 'maxsum';
 cfg.minnbchan        = 1;
 cfg.neighbours     = neighbours5;
-cfg.neighbourdist  = .6;
+%cfg.neighbourdist  = .6;
 cfg.tail             = 0;
 cfg.clustertail      = 0;
 cfg.alpha            = 0.025;
@@ -32,3 +32,6 @@ design(2,:) = [ones(1,Nsubj) ones(1,Nsubj)*2];
 cfg.design = design;
 cfg.uvar   = 1;
 cfg.ivar   = 2;
+
+
+[stat2] = ft_timelockstatistics(cfg, Resp_Inc_SE1{:}, Resp_Inc_SE2{:})
