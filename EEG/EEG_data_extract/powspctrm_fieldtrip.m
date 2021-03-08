@@ -67,7 +67,7 @@ eegdata.freq = freqs
 eegdata.powspctrm = totalp
 
 
-Resp_pow_SE1{c}=eegdata;
+Resp_pow_SE1_EC{c}=eegdata;
 
 
 end
@@ -125,7 +125,7 @@ eegdata.dimord = 'chan_freq'
 eegdata.freq = freqs
 eegdata.powspctrm = totalp
 
-Nonresp_pow_SE1{c}=eegdata
+Nonresp_pow_SE1_EC{c}=eegdata
 
 end
 
@@ -182,7 +182,7 @@ eegdata.freq = freqs
 eegdata.powspctrm = totalp
 
 
-Resp_pow_SE2{c}=eegdata;
+Resp_pow_SE2_EC{c}=eegdata;
 
 
 end
@@ -240,9 +240,9 @@ eegdata.dimord = 'chan_freq'
 eegdata.freq = freqs
 eegdata.powspctrm = totalp
 
-Nonresp_pow_SE2{c}=eegdata
+Nonresp_pow_SE2_EC{c}=eegdata
 
 end
 
 
-save Power Resp_pow_SE1 Nonresp_pow_SE1 Resp_pow_SE2 Nonresp_pow_SE2
+save Power_EC Resp_pow_SE1_EC Nonresp_pow_SE1_EC Resp_pow_SE2_EC Nonresp_pow_SE2_EC

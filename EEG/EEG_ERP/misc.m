@@ -64,10 +64,38 @@ Nonresp_pow_SE2 = ft_freqgrandaverage(cfg, Nonresp_pow_SE2{:});
 
 cfg = [];
 cfg.elec = elec;
-cfg.channel = Resp_pow_SE1{1}.label;
+cfg.channel = Resp_pow_SE1.label;
 cfg.method = 'triangulation';
 %cfg.method = 'distance';
 %cfg.neighbourdist  = 30;
 cfg.compress = 'yes';
 cfg.feedback = 'yes';
 neighbours5 = ft_prepare_neighbours(cfg);
+
+
+foi_contrast = [0.5 30];
+
+cfg = [];
+cfg.channel          = 'all';
+cfg.frequency        = foi_contrast;
+cfg.parameter        = 'powspctrm_b';
+cfg.method           = 'ft_statistics_montecarlo';  % use the Monte Carlo method to calculate probabilities
+cfg.statistic        = 'ft_statfun_depsamplesT';    % use the dependent samples T-statistic as a measure to evaluate the effect at each sample
+cfg.correctm         = 'cluster';
+cfg.clusteralpha     = 0.05;                        % threshold for the sample-specific test, is used for thresholding
+cfg.clusterstatistic = 'maxsize';
+cfg.clusterthreshold = 'nonparametric_common';
+cfg.minnbchan        = 2;                           % minimum number of neighbouring channels that is required
+cfg.tail             = 0;                           % test the left, right or both tails of the distribution
+cfg.clustertail      = cfg.tail;
+cfg.alpha            = 0.05;                        % alpha level of the permutation test
+cfg.correcttail      = 'alpha';                     % see https://www.fieldtriptoolbox.org/faq/why_should_i_use_the_cfg.correcttail_option_when_using_statistics_montecarlo/
+cfg.computeprob      = 'yes';
+cfg.numrandomization = 500;                         % number of random permutations
+cfg.neighbours       = cfg_neigh.neighbours;
+
+
+
+
+resp_before=squeeze(mean(Resp_pow_SE1.powspctrm,1))
+resp_after=squeeze(mean(Resp_pow_SE2.powspctrm,1))
