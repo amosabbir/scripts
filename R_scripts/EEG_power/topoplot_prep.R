@@ -1,29 +1,32 @@
-setwd("/Users/abdullahmosabbir/Desktop/CANBIND/Data")
+setwd("/Users/abdullahmosabbir/Desktop/CANBIND")
 library(ggplot2)
 library(dplyr)
 library(data.table)
 library(ez)
 
-Baseline_EC_all<-fread("Baseline_EC_all.csv")
+
+Power<-fread("Power_CANBIND2.csv")
+#Power<-subset(Power, chan==("O1"),select=c(PID,Session,Responder,chan,EO_EC,theta_cord))
 
 #for choosing specific subsets
-dfF3<-subset(Baseline_EC_all, EO1_EC2==("1"))
+Power<-subset(Power, EO_EC==("EO"))
 
-#F3 baseline
-#df_F3<-subset(dfF3,SE1_SE2=="1",select=c(ID,EO1_SE22,SE1_SE2,Responder,Alpha))
-df_F3_SE1<-subset(dfF3,SE1_SE2=="1")
-df_F3_SE2<-subset(dfF3,SE1_SE2=="2")
-df_F3_SE1$AlphaS2<-df_F3_SE2$Alpha
-df_F3_SE1$Diff<-df_F3_SE1$AlphaS2-df_F3_SE1$Alpha
+#O1 baseline
+#Power<-subset(Power,Session=="1",select=c(PID,EO_EC,Session,Responder,theta_cord))
+Power_SE1<-subset(Power,Session=="1")
+Power_SE2<-subset(Power,Session=="2")
+
+Power_SE1$theta_cord2<-Power_SE2$theta_cord
+Power_SE1$diff<-Power_SE1$theta_cord2-Power_SE1$theta_cord
 
 
-dfF3_SE1_R<-subset(df_F3_SE1, Responder==("R"))
-dfF3_SE1_NR<-subset(df_F3_SE1, Responder==("NR"))
-dfF3_SE1_R<-summaryBy (Diff ~ Channel, data=dfF3_SE1_R, FUN=c(length,mean,sd))
-dfF3_SE1_NR<-summaryBy (Diff ~ Channel, data=dfF3_SE1_NR, FUN=c(length,mean,sd))
+Power_SE1_R<-subset(Power_SE1, Responder==("Responder"),select=c(PID,EO_EC,Session,Responder,chan,diff))
+Power_SE1_NR<-subset(Power_SE1, Responder==("Nonresponder"),select=c(PID,EO_EC,Session,Responder,chan,diff))
+Power_SE1_R<-summaryBy (diff ~ chan, data=Power_SE1_R, FUN=c(length,mean,sd))
+Power_SE1_NR<-summaryBy (diff ~ chan, data=Power_SE1_NR, FUN=c(length,mean,sd))
 
-write.xlsx(dfF3_SE1_R$Diff.mean,"alpha_before_after_R.xlsx")
-write.xlsx(dfF3_SE1_NR$Diff.mean,"alpha_before_after_NR.xlsx")
+write.csv(Power_SE1_R$diff.mean,"theta_corddiff_O1_R.csv")
+write.csv(Power_SE1_NR$diff.mean,"theta_corddiff_O1_NR.csv")
 
 
 

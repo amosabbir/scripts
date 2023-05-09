@@ -1,0 +1,7 @@
+#! /bin/tcsh
+
+#/auto/iduna/amosabbir/sample_scripts
+addMarker -f -n Pulse  -c 000000000000000010000000 /rri_disks/artemis/meltzer_lab/Fibro/meg_practice/99997_AEF_20210317_01.ds
+addMarker -f -n Sound  -c 000000000000000000100000 /rri_disks/artemis/meltzer_lab/Fibro/meg_practice/99997_AEF_20210317_01.ds
+addMarker -f -n Rest  -c 000000000000000000000001 /rri_disks/artemis/meltzer_lab/Fibro/meg_practice/99997_AEF_20210317_01.ds
+addMarker -f -n Start  -c 000000000000000011111111 /rri_disks/artemis/meltzer_lab/Fibro/meg_practice/99997_AEF_20210317_01.ds
