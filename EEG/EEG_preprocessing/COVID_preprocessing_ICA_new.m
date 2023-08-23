@@ -1,7 +1,13 @@
 % Place this file in eeglab folder
 % Go to eeglab folder
-% nohup matlab -r test > outfile.txt < /dev/null &
+% nohup matlab -r COVID_preprocessing_ICA_new > outfile.txt < /dev/null &
 % /rri_disks/artemis/meltzer_lab/shared/toolboxes/eeglab13_6_5b
+
+%new Jun21
+% matlab -r COVID_preprocessing_ICA_new > outfile.txt < /dev/null &
+
+addpath('/rri_disks/artemis/meltzer_lab/shared/toolboxes/eeglab13_6_5b/')
+
 
 ICAnumber = zeros(40,1);
 ICAnumber(1,1) = 30;
@@ -51,11 +57,11 @@ ICAnumber(40,1) = 30;
 %Eyes open
 for a=1:40
 c=2+2*a
-eeg_dir=dir('/rri_disks/artemis/meltzer_lab/COVID/PP_0');
+eeg_dir=dir('/rri_disks/eugenia/meltzer_lab/abdullah/COVID/PP_0');
 N=eeg_dir(c).name;
 
 [ALLEEG EEG CURRENTSET ALLCOM] = eeglab;
-EEG = pop_loadset('filename',eeg_dir(c).name,'filepath','/rri_disks/artemis/meltzer_lab/COVID/PP_0');
+EEG = pop_loadset('filename',eeg_dir(c).name,'filepath','/rri_disks/eugenia/meltzer_lab/abdullah/COVID/PP_0');
 [ALLEEG, EEG, CURRENTSET] = eeg_store( ALLEEG, EEG, 0 );
 
 %Average reference
@@ -71,13 +77,15 @@ EEG = eeg_checkset( EEG );
 EEG = pop_rmbase( EEG, [0  3998]);
 [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 2,'gui','off');
 
+
 %ICA
 EEG = eeg_checkset( EEG );
 EEG = pop_runica(EEG, 'pca',ICAnumber(a,1),'chanind',1:30,'interupt','on');
 [ALLEEG EEG] = eeg_store(ALLEEG, EEG, CURRENTSET);
 
+
 EEG = eeg_checkset( EEG );
-EEG = pop_saveset( EEG, 'filename',eeg_dir(c).name,'filepath','/rri_disks/artemis/meltzer_lab/COVID/PP_ICA_EO');
+EEG = pop_saveset( EEG, 'filename',eeg_dir(c).name,'filepath','/rri_disks/eugenia/meltzer_lab/abdullah/COVID/PP_ICA_EO');
 [ALLEEG EEG] = eeg_store(ALLEEG, EEG, CURRENTSET);
 close all
 
@@ -90,11 +98,11 @@ end
 %Eyes closed
 for a=1:40
 c=2+2*a
-eeg_dir=dir('/rri_disks/artemis/meltzer_lab/COVID/PP_0');
+eeg_dir=dir('/rri_disks/eugenia/meltzer_lab/abdullah/COVID/PP_0');
 N=eeg_dir(c).name;
 
 [ALLEEG EEG CURRENTSET ALLCOM] = eeglab;
-EEG = pop_loadset('filename',eeg_dir(c).name,'filepath','/rri_disks/artemis/meltzer_lab/COVID/PP_0');
+EEG = pop_loadset('filename',eeg_dir(c).name,'filepath','/rri_disks/eugenia/meltzer_lab/abdullah/COVID/PP_0');
 [ALLEEG, EEG, CURRENTSET] = eeg_store( ALLEEG, EEG, 0 );
 
 %Average reference
@@ -110,13 +118,15 @@ EEG = eeg_checkset( EEG );
 EEG = pop_rmbase( EEG, [0  3998]);
 [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 2,'gui','off');
 
+
 %ICA
 EEG = eeg_checkset( EEG );
 EEG = pop_runica(EEG, 'pca',ICAnumber(a,1),'chanind',1:30,'interupt','on');
 [ALLEEG EEG] = eeg_store(ALLEEG, EEG, CURRENTSET);
 
+
 EEG = eeg_checkset( EEG );
-EEG = pop_saveset( EEG, 'filename',eeg_dir(c).name,'filepath','/rri_disks/artemis/meltzer_lab/COVID/PP_ICA_EC');
+EEG = pop_saveset( EEG, 'filename',eeg_dir(c).name,'filepath','/rri_disks/eugenia/meltzer_lab/abdullah/COVID/PP_ICA_EC');
 [ALLEEG EEG] = eeg_store(ALLEEG, EEG, CURRENTSET);
 close all
 

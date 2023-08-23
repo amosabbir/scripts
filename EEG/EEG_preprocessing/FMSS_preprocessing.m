@@ -1,6 +1,6 @@
 %/rri_disks/artemis/meltzer_lab/Fibro/SubStudy/raw_files
 %/rri_disks/artemis/meltzer_lab/Fibro/SubStudy
-% nohup matlab -r FMSS > outfile.txt < /dev/null &
+% nohup matlab -r FMSS_preprocessing > outfile.txt < /dev/null &
 
 
 for c=3:42
@@ -70,7 +70,7 @@ EEG = pop_reref( EEG, [], 'exclude', [65:76]);
 
 %save
 EEG = eeg_checkset( EEG );
-EEG = pop_saveset( EEG, 'filename',file_name,'filepath','/rri_disks/artemis/meltzer_lab/Fibro/SubStudy/PP_0');
+EEG = pop_saveset( EEG, 'filename',file_name,'filepath','/rri_disks/eugenia/meltzer_lab/FMSS/PP_0');
 [ALLEEG EEG] = eeg_store(ALLEEG, EEG, CURRENTSET);
 
 %close
